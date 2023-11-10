@@ -7,7 +7,7 @@ class IModelChangedObserver:
         pass
 
 class IModelChanger:
-    def notifyChange(self, sender: IModelChanger):
+    def notifyChange(self, sender):
         pass
     
 class ModelStore(IModelChanger):
