@@ -54,9 +54,7 @@ class SilverGenerator(ItemFabric):
         return Silver()
 
 if __name__ == '__main__':
-    counter = Counter()
     rewards = []
-
     generators = 10 * [BronzeGenerator()] + \
                     10 * [EmeraldGenerator()] + \
                         10 * [RubyGenerator()] + \
