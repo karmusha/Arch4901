@@ -1,32 +1,16 @@
 from abc import ABC, abstractmethod
-from random import randint
+import random
+from collections import Counter
 
-
-class IGameItem (ABC):
-    """Абстрактный класс"""
-
-    @abstractmethod
-    def open(self):
-        pass
+from reward_app.products import Gem, Gold, Bronze, Emerald, Ruby, Sapphire, Silver
 
 class ItemFabric (ABC):
     """Класс фабрики"""
 
+    @abstractmethod
     def create_item(self):
         pass
     
-class Gold(IGameItem):
-    """class Gold"""
-
-    def open(self):
-        print('Gold!')
-
-class Gem(IGameItem):
-    """class Gem"""
-    
-    def open(self):
-        print('Gem!')
-
 class GoldGenerator(ItemFabric):
     """Генератор от фабрики, который делает Gold"""
 
@@ -39,8 +23,50 @@ class GemGenerator(ItemFabric):
     def create_item(self):
         return Gem()
 
-if __name__ == '__main__':
-    rewards = [GoldGenerator(), GemGenerator()]
+class BronzeGenerator(ItemFabric):
+    """Генератор от фабрики, который делает Bronze"""
 
-    for i in range (10):
-        rewards[randint(0, 1)].create_item().open()
+    def create_item(self):
+        return Bronze()
+    
+class EmeraldGenerator(ItemFabric):
+    """Генератор от фабрики, который делает Emerald"""
+
+    def create_item(self):
+        return Emerald()
+    
+class RubyGenerator(ItemFabric):
+    """Генератор от фабрики, который делает Ruby"""
+
+    def create_item(self):
+        return Ruby()
+    
+class SapphireGenerator(ItemFabric):
+    """Генератор от фабрики, который делает Sapphire"""
+
+    def create_item(self):
+        return Sapphire()
+    
+class SilverGenerator(ItemFabric):
+    """Генератор от фабрики, который делает Silver"""
+
+    def create_item(self):
+        return Silver()
+
+if __name__ == '__main__':
+    counter = Counter()
+    rewards = []
+
+    generators = 10 * [BronzeGenerator()] + \
+                    10 * [EmeraldGenerator()] + \
+                        10 * [RubyGenerator()] + \
+                            10 * [SapphireGenerator()] + \
+                                10 * [SilverGenerator()] + \
+                                    3 * [GoldGenerator()] + \
+                                        [GemGenerator()]
+
+    for i in range (200):
+        rewards.append(item:= random.choice(generators).create_item())
+
+    for i in rewards:
+        print(type(i).__name__)
